@@ -1,40 +1,44 @@
 package pt.amane.hrpayroll.services;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
+import pt.amane.hrpayroll.DTO.WorkerDTO;
 import pt.amane.hrpayroll.entities.Payment;
-import pt.amane.hrpayroll.entities.Worker;
+import pt.amane.hrpayroll.feignclients.WorkerFeignClient;
 
 @Service
 public class PaymentService {
 
 	/**
-	 * pega o valor da propriedade hr-worker..
+	 * pega o valor da propriedade hr-worker usando RestTemplate..
 	 */
-	@Value("${hr-worker.host}")
-	private String hrWorkerHost;
+	//@Value("${hr-worker.host}")
+	//private String hrWorkerHost;
 
 	/**
-	 * esse objeto restTemplate, vai fazer a chamada no meu webservice hr-worker..
+	 * esse objeto restTemplate, vai fazer a 
+	 * chamada no meu webservice hr-worker..
+	 */
+	//@Autowired
+	//private RestTemplate restTemplate;
+	
+	/**
+	 * pega o endpoit definido na interface..
 	 */
 	@Autowired
-	private RestTemplate restTemplate;
+	private WorkerFeignClient workerFeignClient;
 
 	// Metodo pagamento de serviço..
 	public Payment getPayment(Long workerId, int qtDays) {
 
 		/**
-		 * para passar parametro cria o Map<String, Sring> que o http só é aceita string
+		 * para passar parametro cria o Map<String, Sring> que o 
+		 * http só é aceita string qd usa Reste Template..
 		 */
-		Map<String, String> uriVariables = new HashMap<>();
+		//Map<String, String> uriVariables = new HashMap<>();
 		// "" + workerId = converte long para string..
-		uriVariables.put("id", "" + workerId);
+		//uriVariables.put("id", "" + workerId);
 
 		/**
 		 * Para fazer a requisicao externa, tem q criar nova classe que quer chamar
@@ -49,9 +53,9 @@ public class PaymentService {
 		 * hrWorkerHost =é o link de worker (http://localhost:8001)
 		 *  + "/workers/{id}" => concatena o endpoint com link
 		 *  , Worker.class => passa a classe worker, 
-		 *  uriVariables = pega parametro da requisicao..
+		 *  uriVariables = pega parametro da requisicao qd usava RestTemplate..
 		 */
-		Worker worker = restTemplate.getForObject(hrWorkerHost + "/workers/{id}", Worker.class, uriVariables);
+		WorkerDTO worker = workerFeignClient.findById(workerId).getBody();
 		
 		/**
 		 * o worker vai receber o resultado da requisicao, e apenas 
