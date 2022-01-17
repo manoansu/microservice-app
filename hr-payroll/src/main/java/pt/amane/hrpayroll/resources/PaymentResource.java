@@ -23,6 +23,7 @@ public class PaymentResource {
 	// /days -> é o dias que funcionario trabalhou(esse parametro pde ser dia, mes, ano, 
 	// ou qq ouca coisa para associar esse endpoint)
 	// /{day} -> é qtdade de dias que ele trabalha para ser pago..
+	
 	@GetMapping(value = "/{workerId}/days/{day}")
 	public ResponseEntity<Payment> getPeyment(@PathVariable Long workerId, @PathVariable Integer day) {
 		Payment payment = service.getPayment(workerId, day);
