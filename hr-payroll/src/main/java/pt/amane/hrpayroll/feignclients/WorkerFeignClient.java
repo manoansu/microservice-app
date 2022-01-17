@@ -11,12 +11,16 @@ import pt.amane.hrpayroll.DTO.WorkerDTO;
 
 /**
  * esse compnent vai se injetado noutra classe..
+ * FeignClient(name = "hr-worker", path = "/workers")
+ * com uso de ribbon vamos tirar url = "localhost:8001" 
+ * e usar a lista de instancias/clientes que vai rodar configurando a em
+ * application.properties.. 
  * @author manoansu
  *
  */
 
 @Component
-@FeignClient(name = "hr-worker", url = "localhost:8001" ,path = "/workers")
+@FeignClient(name = "hr-worker", path = "/workers")
 public interface WorkerFeignClient {
 	
 	/**
