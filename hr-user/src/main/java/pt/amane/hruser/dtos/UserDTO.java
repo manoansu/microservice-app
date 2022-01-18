@@ -1,6 +1,11 @@
 package pt.amane.hruser.dtos;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import pt.amane.hruser.entities.Role;
+import pt.amane.hruser.entities.User;
 
 public class UserDTO implements Serializable {
 
@@ -11,15 +16,28 @@ public class UserDTO implements Serializable {
 	private String email;
 	private String password;
 
+	private Set<RoleDTO> roles = new HashSet<>();
+
 	public UserDTO() {
 	}
 
 	public UserDTO(Long id, String name, String email, String password) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
+	}
+
+	public UserDTO(User user) {
+		id = user.getId();
+		name = user.getName();
+		email = user.getEmail();
+		password = user.getPassword();
+	}
+
+	public UserDTO(User user, Set<Role> obj) {
+		this(user);
+		obj.forEach(x -> roles.add(new RoleDTO(x)));
 	}
 
 	public Long getId() {
@@ -52,6 +70,10 @@ public class UserDTO implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Set<RoleDTO> getRoles() {
+		return roles;
 	}
 
 }

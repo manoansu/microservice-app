@@ -2,6 +2,8 @@ package pt.amane.hruser.dtos;
 
 import java.io.Serializable;
 
+import pt.amane.hruser.entities.Role;
+
 public class RoleDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -13,9 +15,13 @@ public class RoleDTO implements Serializable {
 	}
 
 	public RoleDTO(Long id, String roleName) {
-		super();
 		this.id = id;
 		this.roleName = roleName;
+	}
+	
+	public RoleDTO(Role role) {
+		id = role.getId();
+		roleName = role.getRoleName();
 	}
 
 	public Long getId() {
