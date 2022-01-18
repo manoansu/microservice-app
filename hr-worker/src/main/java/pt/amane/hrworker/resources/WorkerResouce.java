@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,14 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 import pt.amane.hrworker.DTO.WorkerDTO;
 import pt.amane.hrworker.services.WorkerService;
 
+@RefreshScope
 @RestController
 @RequestMapping(value = "/workers")
 public class WorkerResouce {
 	
 	private static Logger logger = org.slf4j.LoggerFactory.getLogger(WorkerResouce.class);
 	
-	/* pega qq valor nesse caso o testcriado 
-	*no git para testar configuração de server.
+	/* pega qq valor nesse caso o teste criado 
+	*no git para testar configuração de server
+	* e acessar anossa configuraçao do gi.
 	*/
 	@Value("${test.config}")
 	private String testConfig;
