@@ -1,4 +1,4 @@
-package pt.amane.hroath;
+package pt.amane.hroauth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

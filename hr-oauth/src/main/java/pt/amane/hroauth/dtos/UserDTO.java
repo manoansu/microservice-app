@@ -1,17 +1,13 @@
-package pt.amane.hroath.entities;
+package pt.amane.hroauth.dtos;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
-/**
- * O acesso desse dado é soó na memoria
- * e nao vai aceder banco de dado..
- * @author manoansu
- *
- */
-public class User implements Serializable {
+import pt.amane.hroauth.entities.Role;
+import pt.amane.hroauth.entities.User;
+
+public class UserDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -20,17 +16,28 @@ public class User implements Serializable {
 	private String email;
 	private String password;
 
-	private Set<Role> roles = new HashSet<>();
+	private Set<RoleDTO> roles = new HashSet<>();
 
-	public User() {
+	public UserDTO() {
 	}
 
-	public User(Long id, String name, String email, String password) {
-		super();
+	public UserDTO(Long id, String name, String email, String password) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
+	}
+
+	public UserDTO(User user) {
+		id = user.getId();
+		name = user.getName();
+		email = user.getEmail();
+		password = user.getPassword();
+	}
+
+	public UserDTO(User user, Set<Role> obj) {
+		this(user);
+		obj.forEach(x -> roles.add(new RoleDTO(x)));
 	}
 
 	public Long getId() {
@@ -65,25 +72,8 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public Set<Role> getRoles() {
+	public Set<RoleDTO> getRoles() {
 		return roles;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		return Objects.equals(id, other.id);
 	}
 
 }

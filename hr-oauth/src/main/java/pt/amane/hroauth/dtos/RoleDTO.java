@@ -1,8 +1,8 @@
-package pt.amane.hroath.dtos;
+package pt.amane.hroauth.dtos;
 
 import java.io.Serializable;
 
-import pt.amane.hroath.entities.Role;
+import pt.amane.hroauth.entities.Role;
 
 public class RoleDTO implements Serializable {
 

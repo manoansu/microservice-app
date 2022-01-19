@@ -1,4 +1,4 @@
-package pt.amane.hroath.resouces;
+package pt.amane.hroauth.resouces;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import pt.amane.hroath.dtos.UserDTO;
-import pt.amane.hroath.services.UserService;
+import pt.amane.hroauth.entities.User;
+import pt.amane.hroauth.services.UserService;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -19,9 +19,9 @@ public class UserResource {
 	private UserService service;
 	
 	@GetMapping(value = "/search")
-	public ResponseEntity<UserDTO> findByEmail(@RequestParam String email){
+	public ResponseEntity<User> findByEmail(@RequestParam String email){
 		try {
-			UserDTO user = service.findByEmail(email);
+			User user = service.findByEmail(email);
 			return ResponseEntity.ok(user);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

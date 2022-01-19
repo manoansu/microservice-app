@@ -1,4 +1,4 @@
-package pt.amane.hroath.entities;
+package pt.amane.hroauth.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
