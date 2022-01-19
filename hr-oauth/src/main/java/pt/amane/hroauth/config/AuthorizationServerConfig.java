@@ -1,7 +1,9 @@
 package pt.amane.hroauth.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -20,6 +22,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
  */
 @Configuration
 @EnableAuthorizationServer
+@PropertySource(value = {"classpath:application.properties"})
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter{
 
 	/**
@@ -28,6 +31,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	 * overide/implement method e adiciona o 3 metodos..
 	 */
 	
+	@Value("${oauth.client.name}")
+	private String clientName;
+	
+	@Value("${oauth.client.secret}")
+	private String clientSecret;
+	
+		
 	//Sao atributo dos 3 bean definido na clase AppConfig
 	
 	@Autowired
@@ -51,8 +61,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		// configura autenticação com base na configuraçao e do grant-type.
 		clients.inMemory()
-		.withClient("myappname123")
-		.secret(passwordEncoder.encode("myappsecret123"))
+		.withClient(clientName)
+		.secret(passwordEncoder.encode(clientSecret))
 		.scopes("read", "write")
 		.authorizedGrantTypes("password")
 		//pega o tempo de duracao de toke espirar nesse caso 24 hora..
