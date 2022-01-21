@@ -50,7 +50,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	private JwtTokenStore tokenStore;
 
 	@Autowired
-	private AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 	
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
@@ -75,6 +75,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		// para configurar o processamento de token..
 		endpoints.authenticationManager(authenticationManager)
 		.tokenStore(tokenStore)
+		.reuseRefreshTokens(false)
 		.accessTokenConverter(accessTokenConverter);
 	}
 }
