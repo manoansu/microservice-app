@@ -2,6 +2,7 @@ package pt.amane.hrworker.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,8 @@ import pt.amane.hrworker.DTO.WorkerDTO;
 import pt.amane.hrworker.entities.Worker;
 import pt.amane.hrworker.repositories.WorkerRepository;
 import pt.amane.hrworker.services.exception.ObjectNotFoundException;
+
+
 
 @Service
 public class WorkerService {
@@ -24,12 +27,11 @@ public class WorkerService {
 				"Object not found! id: " + id + ", Type: " + WorkerDTO.class.getName()));
 		return new WorkerDTO(worker);
 	}
-	
 
 	@Transactional(readOnly = true)
 	public List<WorkerDTO> findAll() {
 		List<Worker> workers = repository.findAll();
-		return workers.stream().map(x -> new WorkerDTO(x)).toList();
+		return workers.stream().map(x -> new WorkerDTO(x)).collect(Collectors.toList());
 	}
 
 }
